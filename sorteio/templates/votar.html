@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2 class="text-center mb-4">Avaliação de Jogadores</h2>
+        
+        <!-- Barra de Progresso -->
+        <div class="progress mb-4">
+            <div class="progress-bar bg-success" role="progressbar" style="width: {{ progresso }}%" 
+                 aria-valuenow="{{ progresso }}" aria-valuemin="0" aria-valuemax="100">
+                {{ progresso|floatformat:0 }}%
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <div class="card text-center bg-primary text-white">
+                    <div class="card-body">
+                        <h5>{{ avaliacoes_feitas }}</h5>
+                        <p class="mb-0">Avaliações Feitas</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center bg-warning text-white">
+                    <div class="card-body">
+                        <h5>{{ jogadores_restantes }}</h5>
+                        <p class="mb-0">Jogadores Restantes</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center bg-info text-white">
+                    <div class="card-body">
+                        <h5>{{ total_jogadores }}</h5>
+                        <p class="mb-0">Total de Jogadores</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        {% if jogador %}
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Avalie: {{ jogador.nome }}</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        {{ form.as_p }}
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success btn-lg">
+                            <i class="fas fa-star"></i> Enviar Avaliação
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% else %}
+        <div class="alert alert-success text-center">
+            <h4>🎉 Parabéns!</h4>
+            <p>Você já avaliou todos os jogadores hoje!</p>
+            <a href="{% url 'parcial_times' %}" class="btn btn-primary">Ver Parcial dos Times</a>
+        </div>
+        {% endif %}
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'parcial_times' %}" class="btn btn-outline-primary">Ver Parcial</a>
+            <a href="{% url 'logout' %}" class="btn btn-outline-danger">Sair</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

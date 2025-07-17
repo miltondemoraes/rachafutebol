@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-12">
+        <h2 class="text-center mb-4">{% if parcial %}Parcial dos{% else %}Times Sorteados{% endif %}</h2>
+        
+        <div class="row">
+            {% for time in times %}
+            <div class="col-md-6 col-lg-3">
+                <div class="card mb-4">
+                    <div class="card-header bg-{% cycle 'primary' 'danger' 'success' 'warning' %} text-white">
+                        <h5>Time {% cycle 'A' 'B' 'C' 'D' %}</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            {% for jogador in time %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <small>{{ jogador.nome }}</small>
+                                <span class="badge bg-secondary rounded-pill">
+                                    {{ jogador.media_notas|default:0|floatformat:1 }}
+                                </span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <small>
+                            <strong>{{ time|length }} jogador{{ time|length|pluralize:"es" }}</strong><br>
+                            <strong>Média:</strong> {{ time.media_time|default:"0.0"|floatformat:1 }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Resumo dos Times -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Resumo dos Times</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            {% for time in times %}
+                            <div class="col-md-3">
+                                <div class="text-center">
+                                    <h6>Time {% cycle 'A' 'B' 'C' 'D' %}</h6>
+                                    <p class="mb-1"><strong>{{ time|length }}</strong> jogadores</p>
+                                    <p class="mb-0">Média: <strong>{{ time.media_time|default:"0.0"|floatformat:1 }}</strong></p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            {% if parcial %}
+                <a href="{% url 'votar' %}" class="btn btn-primary">Voltar às Avaliações</a>
+            {% endif %}
+            <a href="{% url 'logout' %}" class="btn btn-outline-danger">Sair</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

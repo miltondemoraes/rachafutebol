@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2 class="mb-4">Lista de Jogadores</h2>
+    
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <a href="{% url 'cadastrar_jogador' %}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Cadastrar Novo Jogador
+            </a>
+        </div>
+        <div class="col-md-6 text-end">
+            <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Voltar ao Dashboard
+            </a>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-body">
+            {% if jogadores %}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Total de Votos</th>
+                            <th>Média das Notas</th>
+                            <th>Data de Cadastro</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for jogador in jogadores %}
+                        <tr>
+                            <td><strong>{{ jogador.nome }}</strong></td>
+                            <td>
+                                <span class="badge bg-info">{{ jogador.count_votos }}</span>
+                            </td>
+                            <td>
+                                {% if jogador.avg_notas %}
+                                    <span class="badge bg-success">{{ jogador.avg_notas|floatformat:1 }}</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Sem votos</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ jogador.data_cadastro|date:"d/m/Y H:i" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center">
+                <p class="text-muted">Nenhum jogador cadastrado ainda.</p>
+                <a href="{% url 'cadastrar_jogador' %}" class="btn btn-primary">Cadastrar Primeiro Jogador</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

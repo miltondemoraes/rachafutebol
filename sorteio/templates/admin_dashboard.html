@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2 class="mb-4">Dashboard Administrativo</h2>
+    
+    <!-- Estatísticas Gerais -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-center bg-primary text-white">
+                <div class="card-body">
+                    <h3>{{ total_jogadores }}</h3>
+                    <p class="mb-0">Jogadores Cadastrados</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center bg-success text-white">
+                <div class="card-body">
+                    <h3>{{ total_votantes }}</h3>
+                    <p class="mb-0">Votantes Registrados</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center bg-info text-white">
+                <div class="card-body">
+                    <h3>{{ total_votos }}</h3>
+                    <p class="mb-0">Total de Votos</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center bg-warning text-white">
+                <div class="card-body">
+                    <h3>{{ votos_hoje }}</h3>
+                    <p class="mb-0">Votos Hoje</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Ações Rápidas -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Ações Administrativas</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'cadastrar_jogador' %}" class="btn btn-primary btn-lg w-100">
+                                <i class="fas fa-user-plus"></i><br>
+                                Cadastrar Jogador
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'listar_jogadores' %}" class="btn btn-info btn-lg w-100">
+                                <i class="fas fa-list"></i><br>
+                                Listar Jogadores
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'sortear_times' %}" class="btn btn-success btn-lg w-100">
+                                <i class="fas fa-random"></i><br>
+                                Times Finais
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="{% url 'logout' %}" class="btn btn-danger btn-lg w-100">
+                                <i class="fas fa-sign-out-alt"></i><br>
+                                Sair
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

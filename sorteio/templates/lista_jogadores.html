@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2 class="text-center mb-4">Avaliar Jogadores</h2>
+        
+        <div class="progress mb-4">
+            <div class="progress-bar" role="progressbar" style="width: {{ progresso }}%" 
+                 aria-valuenow="{{ progresso }}" aria-valuemin="0" aria-valuemax="100">
+                {{ progresso|floatformat:0 }}%
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h5>Avaliar: {{ jogador.nome_completo }}</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="avaliado_id" value="{{ jogador.id }}">
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Enviar Avaliação</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="mt-3 text-center">
+            <a href="{% url 'parcial_times' %}" class="btn btn-outline-primary">Ver Parcial dos Times</a>
+            <a href="{% url 'logout' %}" class="btn btn-outline-danger">Sair</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
